@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Citation Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        header {
+            background: #2563eb;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>AI Citation Generator</h1>
+        <p>Generate and manage research paper citations easily</p>
+    </header>
+
+    <div class="container">
+
+        <!-- DOI SECTION -->
+        <div class="card">
+
+            <h2>Generate Citation from DOI</h2>
+
+            <label for="doi">
+                Enter DOI
+            </label>
+
+            <input
+                type="text"
+                id="doi"
+                placeholder="Example: 10.xxxx/xxxxx"
+            >
+
+            <label for="citationStyle">
+                Citation Style
+            </label>
+
+            <select id="citationStyle">
+                <option>APA</option>
+                <option>IEEE</option>
+                <option>MLA</option>
+            </select>
+
+            <button>
+                Generate Citation
+            </button>
+
+        </div>
+
+
+        <!-- PDF SECTION -->
+        <div class="card">
+
+            <h2>Upload Research Paper</h2>
+
+            <label for="pdf">
+                Upload PDF
+            </label>
+
+            <input
+                type="file"
+                id="pdf"
+                accept=".pdf"
+            >
+
+            <button>
+                Analyze PDF
+            </button>
+
+        </div>
+
+
+        <!-- TEXT SECTION -->
+        <div class="card">
+
+            <h2>Find Related Papers</h2>
+
+            <label for="researchText">
+                Enter your sentence or research text
+            </label>
+
+            <textarea
+                id="researchText"
+                placeholder="Example: Artificial intelligence is increasingly used in healthcare."
+            ></textarea>
+
+            <button>
+                Find Related Papers
+            </button>
+
+        </div>
+
+
+        <!-- RESULT SECTION -->
+        <div class="card">
+
+            <h2>Results</h2>
+
+            <div class="result">
+                <p>
+                    Your generated citations, paper suggestions,
+                    and AI results will appear here.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        <p>AI Citation Generator Project</p>
+    </footer>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
