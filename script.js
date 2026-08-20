@@ -1,4 +1,5 @@
 let paperData = null;
+let generatedCitation = "";
 
 const doiInput = document.getElementById("doi");
 const generateButton = document.querySelector(".card button");
@@ -48,7 +49,7 @@ generateButton.addEventListener("click", async function () {
             ? paperData["container-title"][0]
             : "Not available";
 
-        let citation = createCitation(style);
+        generatedCitation = createCitation(style);
 
         resultBox.innerHTML = `
             <h3>Paper Found</h3>
@@ -67,8 +68,17 @@ generateButton.addEventListener("click", async function () {
 
             <h3>Generated Citation</h3>
 
-            <p>${citation}</p>
+            <p id="citationText">${generatedCitation}</p>
+
+            <button id="copyButton">
+                Copy Citation
+            </button>
         `;
+
+        document.getElementById("copyButton").addEventListener(
+            "click",
+            copyCitation
+        );
 
     } catch (error) {
 
@@ -160,3 +170,88 @@ function createCitation(style) {
 
     return "Citation style not available.";
 }
+
+
+async function copyCitation() {
+
+    try {
+
+        await navigator.clipboard.writeText(generatedCitation);
+
+        const copyButton = document.getElementById("copyButton");
+
+        copyButton.textContent = "Copied!";
+
+        setTimeout(() => {
+            copyButton.textContent = "Copy Citation";
+        }, 2000);
+
+    } catch (error) {
+
+        alert("Could not copy the citation.");
+    }
+}
+const pdfInput = document.getElementById("pdf");
+
+const analyzePdfButton = document.querySelectorAll(".card button")[1];
+
+analyzePdfButton.addEventListener("click", async function () {
+
+    const file = pdfInput.files[0];
+
+    if (!file) {
+        resultBox.innerHTML = "<p>Please select a PDF first.</p>";
+        return;
+    }
+
+    resultBox.innerHTML = "<p>Reading PDF...</p>";
+
+    const formData = new FormData();
+
+    formData.append("pdf", file);
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/upload-pdf",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "PDF upload failed.");
+        }
+
+        resultBox.innerHTML = `
+            <h3>PDF Successfully Read</h3>
+
+            <p>
+                Your PDF has been uploaded and its text has been extracted.
+            </p>
+
+            <hr>
+
+            <p><strong>Extracted Text:</strong></p>
+
+            <div style="
+                max-height: 400px;
+                overflow-y: auto;
+                background: white;
+                padding: 15px;
+                border-radius: 6px;
+            ">
+                ${data.text}
+            </div>
+        `;
+
+    } catch (error) {
+
+        resultBox.innerHTML = `
+            <p><strong>Error:</strong> ${error.message}</p>
+        `;
+    }
+});
